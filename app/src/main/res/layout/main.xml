@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient">
+
+    <LinearLayout
+        android:id="@+id/principal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="5dp"
+            android:layout_weight="11"
+            android:background="@drawable/border_video"
+            android:orientation="vertical"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:gravity="center_horizontal"
+                android:textSize="16sp" />
+
+            <ListView
+                android:id="@+id/folder_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:choiceMode="singleChoice"
+                android:drawSelectorOnTop="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/video_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/border_video">
+
+                <VideoView
+                    android:id="@+id/video_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center" />
+
+                <ImageButton
+                    android:id="@+id/fullscreen"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/fullscreen"
+                    android:padding="5dp"
+                    tools:ignore="ContentDescription" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:paddingTop="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/border_video"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
+
+                    <ListView
+                        android:id="@id/android:list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:choiceMode="singleChoice"
+                        android:drawSelectorOnTop="false" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/black_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/Black"
+        android:orientation="vertical"
+        android:visibility="invisible" />
+
+    <VideoView
+        android:id="@+id/fullscreen_video_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="invisible" />
+
+    <ImageButton
+        android:id="@+id/normalscreen"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="top"
+        android:layout_margin="7dp"
+        android:background="@drawable/normalscreen"
+        android:padding="5dp"
+        android:visibility="invisible"
+        tools:ignore="ContentDescription" />
+
+</FrameLayout>
