@@ -20,17 +20,21 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.hardware.display.DisplayManager;
 import android.hardware.display.DisplayManager.DisplayListener;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,9 +62,13 @@ import android.widget.AdapterView.OnItemClickListener;
  */
 public class VideoPlayerActivity extends ListActivity implements OnCompletionListener, DisplayListener {
 
+	private static final String TAG = "VideoPlayerActivity";
+
 	// Constants.
 	private static final int SCREEN_STATUS_NORMAL = 0;
 	private static final int SCREEN_STATUS_FULL = 1;
+
+	private static final int CODE_FOR_READ_PERMISSION = 100;
 	
 	// Variables.
 
@@ -124,7 +132,10 @@ public class VideoPlayerActivity extends ListActivity implements OnCompletionLis
 		
 		// Find and instance UI components.
 		initializeUIElements();
-		
+
+		// Request Permissions
+        requestReadPermission();
+
 		// Assign values.
 		setListAdapter(videosAdapter);
 		folderListView.setAdapter(foldersAdapter);
@@ -139,11 +150,25 @@ public class VideoPlayerActivity extends ListActivity implements OnCompletionLis
 		displayManager = (DisplayManager)getSystemService(Context.DISPLAY_SERVICE);
 		// Register for display events.
 		displayManager.registerDisplayListener(this, null);
-		
+
 		// Update folder list.
 		updateFolderList();
 	}
-	
+
+	/**
+	 * Beginning with Android 6.0 (API level 23), developers declare that your app
+	 * needs a permission by listing the permission in the app manifest, and then
+	 * requesting that the user approve each permission at runtime.
+	 */
+	private void requestReadPermission() {
+	    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, CODE_FOR_READ_PERMISSION);
+            }
+        }
+    }
+
 	/**
 	 * Initializes all the UI elements used in the application and assigns the
 	 * corresponding listeners.
@@ -302,7 +327,13 @@ public class VideoPlayerActivity extends ListActivity implements OnCompletionLis
 	 */
 	private void startVideoPlayerPresentation() {
 		Display[] displays = displayManager.getDisplays(DisplayManager.DISPLAY_CATEGORY_PRESENTATION);
+
 		if (displays != null && displays.length > 0) {
+			Log.d(TAG, "There are currently " + displays.length + " displays connected.");
+			for (Display display : displays) {
+				Log.d(TAG, " " + display);
+			}
+
 			secondaryVideoPlayer = new SecondaryVideoPlayer(this, displays[0]);
 			secondaryVideoPlayer.show();
 		}
