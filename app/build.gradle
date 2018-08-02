@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 'Digi International:SDK Add-On for ConnectCore 6:22'
-    buildToolsVersion '23.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.0'
     
     defaultConfig {
         applicationId 'com.digi.android.sample.dualvideoplayer'
-        minSdkVersion 22
-        targetSdkVersion 22
+        minSdkVersion 27
+        targetSdkVersion 27
     }
     buildTypes {
         release {
